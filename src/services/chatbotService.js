@@ -1,4 +1,19 @@
 
+/* =========================================================
+   DEVLUISOLIVEIRA AI
+   Serviço de respostas dos quatro assistentes virtuais
+
+   Restaurante Sabor: implementação preservada.
+   Demais assistentes: atendimento aprimorado.
+   Todos os dados são fictícios para demonstração.
+========================================================= */
+
+
+/* =========================================================
+   1. CARDÁPIO — RESTAURANTE SABOR
+   Mantido conforme a implementação original.
+========================================================= */
+
 const restaurantMenu = {
   "Hambúrgueres": [
     {
@@ -106,38 +121,812 @@ const restaurantMenu = {
   ]
 };
 
+
+/* =========================================================
+   2. INFORMAÇÕES DOS NEGÓCIOS
+========================================================= */
+
 const knowledge = {
   barbearia: {
-    servicos: "Oferecemos cortes masculinos, degradê, barba, acabamento e sobrancelha.",
-    precos: "Nossos preços demonstrativos são: corte R$ 35, barba R$ 25 e corte + barba R$ 55.",
-    horarios: "Nosso horário demonstrativo é de segunda a sábado, das 9h às 19h.",
-    agendamento: "Para agendar, informe o serviço desejado e o melhor dia e horário."
+    servicos:
+      "Oferecemos cortes masculinos, degradê, barba, acabamento e sobrancelha.",
+
+    precos:
+      "Nossos preços demonstrativos são: corte R$ 35, barba R$ 25 e corte + barba R$ 55.",
+
+    horarios:
+      "Nosso horário demonstrativo é de segunda a sábado, das 9h às 19h.",
+
+    agendamento:
+      "Para agendar, informe o serviço desejado e o melhor dia e horário."
   },
 
   restaurante: {
-    horarios: "Nosso horário demonstrativo é de segunda a sábado, das 11h às 22h.",
-    delivery: "Oferecemos delivery demonstrativo e pedidos para retirada. Consulte a disponibilidade e a taxa de entrega na simulação.",
-    pagamentos: "Na demonstração, aceitamos Pix, dinheiro e cartões.",
-    endereco: "O endereço do Restaurante Sabor é fictício nesta demonstração."
+    horarios:
+      "Nosso horário demonstrativo é de segunda a sábado, das 11h às 22h.",
+
+    delivery:
+      "Oferecemos delivery demonstrativo e pedidos para retirada. Consulte a disponibilidade e a taxa de entrega na simulação.",
+
+    pagamentos:
+      "Na demonstração, aceitamos Pix, dinheiro e cartões.",
+
+    endereco:
+      "O endereço do Restaurante Sabor é fictício nesta demonstração."
   },
 
   loja: {
-    produtos: "Temos roupas femininas e masculinas, camisetas, calças, vestidos e acessórios.",
-    tamanhos: "Trabalhamos com diferentes tamanhos, conforme a disponibilidade de cada produto.",
-    pagamentos: "Aceitamos Pix, dinheiro e cartões nas condições fictícias desta demonstração.",
-    entrega: "As entregas e os prazos são informações demonstrativas."
+    produtos:
+      "Temos roupas femininas e masculinas, camisetas, calças, vestidos e acessórios.",
+
+    tamanhos:
+      "Trabalhamos com diferentes tamanhos, conforme a disponibilidade de cada produto.",
+
+    pagamentos:
+      "Aceitamos Pix, dinheiro e cartões nas condições fictícias desta demonstração.",
+
+    entrega:
+      "As entregas e os prazos são informações demonstrativas."
   },
 
   clinica: {
-    especialidades: "Nossa clínica demonstrativa apresenta atendimento em clínica geral, dermatologia, pediatria e cardiologia.",
-    consultas: "As consultas são realizadas mediante agendamento.",
-    horarios: "Nosso horário demonstrativo é de segunda a sexta, das 8h às 18h.",
-    agendamento: "Para solicitar um agendamento demonstrativo, informe a especialidade e o melhor horário."
+    especialidades:
+      "Nossa clínica demonstrativa apresenta atendimento em clínica geral, dermatologia, pediatria e cardiologia.",
+
+    consultas:
+      "As consultas são realizadas mediante agendamento.",
+
+    horarios:
+      "Nosso horário demonstrativo é de segunda a sexta, das 8h às 18h.",
+
+    agendamento:
+      "Para solicitar um agendamento demonstrativo, informe a especialidade e o melhor horário."
   }
 };
 
+
+/* =========================================================
+   3. CATÁLOGO — BARBEARIA PREMIUM
+========================================================= */
+
+const barberServices = [
+  {
+    name: "Corte masculino",
+    description: "Corte tradicional personalizado de acordo com seu estilo.",
+    price: 35
+  },
+  {
+    name: "Corte degradê",
+    description: "Corte moderno com transição gradual nas laterais.",
+    price: 40
+  },
+  {
+    name: "Barba",
+    description: "Aparação, desenho e acabamento da barba.",
+    price: 25
+  },
+  {
+    name: "Corte + barba",
+    description: "Combinação de corte masculino e acabamento completo da barba.",
+    price: 55
+  },
+  {
+    name: "Sobrancelha",
+    description: "Limpeza e acabamento das sobrancelhas.",
+    price: 15
+  },
+  {
+    name: "Acabamento",
+    description: "Ajuste de contornos e acabamento do corte.",
+    price: 15
+  }
+];
+
+function getBarberServices() {
+  let response = "💈 SERVIÇOS — BARBEARIA PREMIUM\n";
+  response += "━━━━━━━━━━━━━━━━━━━━\n\n";
+
+  for (const service of barberServices) {
+    response += `${service.name} — ${formatPrice(service.price)}\n`;
+    response += `${service.description}\n\n`;
+  }
+
+  response += "━━━━━━━━━━━━━━━━━━━━\n";
+  response += "Valores fictícios para demonstração.\n\n";
+  response += "Qual serviço você gostaria de conhecer melhor?";
+
+  return response;
+}
+
+function findBarberService(text) {
+  const aliases = {
+    "corte masculino": ["corte masculino", "corte tradicional"],
+    "corte degradê": ["degrade", "corte degradê", "corte fade"],
+    "Barba": ["barba", "fazer a barba"],
+    "Corte + barba": ["corte e barba", "corte + barba", "corte com barba"],
+    "Sobrancelha": ["sobrancelha"],
+    "Acabamento": ["acabamento", "pezinho", "contorno"]
+  };
+
+  return barberServices.find((service) => {
+    const names = aliases[service.name] || [service.name];
+
+    return names.some((name) => text.includes(normalize(name)));
+  });
+}
+
+function getBarberResponse(message) {
+  const text = normalize(message);
+
+  if (
+    text.includes("servico") ||
+    text.includes("servicos") ||
+    text.includes("o que voces fazem") ||
+    text.includes("o que oferece")
+  ) {
+    return getBarberServices();
+  }
+
+  const service = findBarberService(text);
+
+  if (service) {
+    return (
+      `💈 ${service.name}\n\n` +
+      `${service.description}\n\n` +
+      `💰 Preço demonstrativo: ${formatPrice(service.price)}.\n\n` +
+      "Gostaria de consultar outro serviço ou simular um agendamento?"
+    );
+  }
+
+  if (
+    text.includes("preco") ||
+    text.includes("precos") ||
+    text.includes("valor") ||
+    text.includes("quanto custa") ||
+    text.includes("quanto e")
+  ) {
+    return getBarberServices();
+  }
+
+  if (
+    text.includes("agendar") ||
+    text.includes("agendamento") ||
+    text.includes("marcar") ||
+    text.includes("reservar")
+  ) {
+    return (
+      "📅 Vamos simular seu agendamento na Barbearia Premium!\n\n" +
+      "Para começar, informe:\n\n" +
+      "1. Qual serviço deseja realizar?\n" +
+      "2. Qual dia seria melhor para você?\n" +
+      "3. Qual horário prefere?\n\n" +
+      "Com essas informações podemos demonstrar como funcionaria um sistema de agendamento personalizado.\n\n" +
+      "Esta é apenas uma simulação. Nenhum horário real será reservado."
+    );
+  }
+
+  if (
+    text.includes("horario") ||
+    text.includes("funciona") ||
+    text.includes("abre") ||
+    text.includes("fecha")
+  ) {
+    return (
+      "🕒 HORÁRIO DE ATENDIMENTO\n\n" +
+      "Segunda a sábado: das 9h às 19h.\n\n" +
+      "Horários fictícios para esta demonstração."
+    );
+  }
+
+  if (
+    text.includes("endereco") ||
+    text.includes("localizacao") ||
+    text.includes("onde fica")
+  ) {
+    return (
+      "📍 O endereço da Barbearia Premium é fictício nesta demonstração.\n\n" +
+      "Em um projeto real, podemos incluir endereço, mapa e localização da barbearia."
+    );
+  }
+
+  if (
+    text.includes("pagamento") ||
+    text.includes("pix") ||
+    text.includes("cartao") ||
+    text.includes("dinheiro")
+  ) {
+    return (
+      "💳 FORMAS DE PAGAMENTO\n\n" +
+      "Na demonstração, trabalhamos com:\n\n" +
+      "• Pix\n" +
+      "• Dinheiro\n" +
+      "• Cartão de débito\n" +
+      "• Cartão de crédito\n\n" +
+      "Informações fictícias para demonstração."
+    );
+  }
+
+  if (
+    text.includes("degrade") ||
+    text.includes("fade") ||
+    text.includes("cabelo") ||
+    text.includes("corte")
+  ) {
+    return (
+      "💈 Temos opções de cortes tradicionais, degradê e acabamentos personalizados.\n\n" +
+      "Posso apresentar os serviços e valores da Barbearia Premium. Qual estilo você procura?"
+    );
+  }
+
+  if (
+    text.includes("obrigado") ||
+    text.includes("obrigada") ||
+    text.includes("valeu")
+  ) {
+    return "Obrigado pela visita! 😊 A Barbearia Premium agradece seu contato. Quando quiser, estarei por aqui!";
+  }
+
+  return (
+    "Olá! 💈 Será um prazer atender você na Barbearia Premium.\n\n" +
+    "Posso ajudar com:\n\n" +
+    "✂️ Cortes e estilos\n" +
+    "🧔 Serviços de barba\n" +
+    "💰 Preços\n" +
+    "🕒 Horários de atendimento\n" +
+    "📅 Simulação de agendamento\n\n" +
+    "O que gostaria de conhecer?"
+  );
+}
+
+
+/* =========================================================
+   4. CATÁLOGO — LOJA FASHION
+========================================================= */
+
+const fashionProducts = [
+  {
+    name: "Camiseta básica",
+    category: "Camisetas",
+    description: "Camiseta casual de tecido confortável, ideal para o dia a dia.",
+    sizes: ["P", "M", "G", "GG"],
+    colors: ["Preto", "Branco", "Azul"],
+    price: 49.90
+  },
+  {
+    name: "Camiseta estampada",
+    category: "Camisetas",
+    description: "Camiseta moderna com estampa exclusiva demonstrativa.",
+    sizes: ["P", "M", "G", "GG"],
+    colors: ["Preto", "Branco"],
+    price: 59.90
+  },
+  {
+    name: "Calça jeans",
+    category: "Calças",
+    description: "Calça jeans casual com modelagem moderna.",
+    sizes: ["36", "38", "40", "42", "44"],
+    colors: ["Azul", "Preto"],
+    price: 129.90
+  },
+  {
+    name: "Calça jogger",
+    category: "Calças",
+    description: "Calça confortável com estilo esportivo e casual.",
+    sizes: ["P", "M", "G", "GG"],
+    colors: ["Preto", "Cinza"],
+    price: 99.90
+  },
+  {
+    name: "Vestido casual",
+    category: "Vestidos",
+    description: "Vestido versátil para passeios e ocasiões informais.",
+    sizes: ["P", "M", "G"],
+    colors: ["Preto", "Rosa", "Azul"],
+    price: 119.90
+  },
+  {
+    name: "Vestido elegante",
+    category: "Vestidos",
+    description: "Vestido com visual sofisticado para ocasiões especiais.",
+    sizes: ["P", "M", "G"],
+    colors: ["Preto", "Vermelho"],
+    price: 159.90
+  },
+  {
+    name: "Jaqueta casual",
+    category: "Jaquetas",
+    description: "Jaqueta versátil para compor diferentes combinações.",
+    sizes: ["P", "M", "G", "GG"],
+    colors: ["Preto", "Marrom"],
+    price: 189.90
+  },
+  {
+    name: "Bolsa feminina",
+    category: "Acessórios",
+    description: "Bolsa casual para complementar seu visual.",
+    sizes: ["Único"],
+    colors: ["Preto", "Marrom", "Bege"],
+    price: 89.90
+  }
+];
+
+function getFashionCatalog() {
+  let response = "🛍️ CATÁLOGO — LOJA FASHION\n";
+  response += "━━━━━━━━━━━━━━━━━━━━\n\n";
+
+  for (const product of fashionProducts) {
+    response += `${product.name} — ${formatPrice(product.price)}\n`;
+    response += `${product.description}\n`;
+    response += `Tamanhos: ${product.sizes.join(", ")}\n`;
+    response += `Cores: ${product.colors.join(", ")}\n\n`;
+  }
+
+  response += "━━━━━━━━━━━━━━━━━━━━\n";
+  response += "Produtos, preços e disponibilidade fictícios para demonstração.\n\n";
+  response += "Qual produto chamou sua atenção? 😊";
+
+  return response;
+}
+
+function findFashionProduct(text) {
+  return fashionProducts.find((product) => {
+    const name = normalize(product.name);
+
+    return text.includes(name);
+  });
+}
+
+function getFashionResponse(message) {
+  const text = normalize(message);
+
+  if (
+    text.includes("catalogo") ||
+    text.includes("produtos") ||
+    text.includes("mostrar produtos") ||
+    text.includes("quero ver")
+  ) {
+    return getFashionCatalog();
+  }
+
+  const product = findFashionProduct(text);
+
+  if (product) {
+    return (
+      `🛍️ ${product.name}\n\n` +
+      `${product.description}\n\n` +
+      `💰 Preço demonstrativo: ${formatPrice(product.price)}\n\n` +
+      `📏 Tamanhos: ${product.sizes.join(", ")}\n\n` +
+      `🎨 Cores: ${product.colors.join(", ")}\n\n` +
+      "Gostaria de consultar outro produto ou conhecer nossas formas de pagamento?"
+    );
+  }
+
+  if (
+    text.includes("camiseta") ||
+    text.includes("camisetas")
+  ) {
+    const products = fashionProducts.filter(
+      (item) => item.category === "Camisetas"
+    );
+
+    return formatFashionCategory("Camisetas", products);
+  }
+
+  if (
+    text.includes("calca") ||
+    text.includes("calcas") ||
+    text.includes("jeans")
+  ) {
+    const products = fashionProducts.filter(
+      (item) => item.category === "Calças"
+    );
+
+    return formatFashionCategory("Calças", products);
+  }
+
+  if (
+    text.includes("vestido") ||
+    text.includes("vestidos")
+  ) {
+    const products = fashionProducts.filter(
+      (item) => item.category === "Vestidos"
+    );
+
+    return formatFashionCategory("Vestidos", products);
+  }
+
+  if (
+    text.includes("jaqueta") ||
+    text.includes("jaquetas")
+  ) {
+    const products = fashionProducts.filter(
+      (item) => item.category === "Jaquetas"
+    );
+
+    return formatFashionCategory("Jaquetas", products);
+  }
+
+  if (
+    text.includes("acessorio") ||
+    text.includes("acessorios") ||
+    text.includes("bolsa")
+  ) {
+    const products = fashionProducts.filter(
+      (item) => item.category === "Acessórios"
+    );
+
+    return formatFashionCategory("Acessórios", products);
+  }
+
+  if (
+    text.includes("tamanho") ||
+    text.includes("numeração") ||
+    text.includes("numeracao")
+  ) {
+    return (
+      "📏 Trabalhamos com diferentes tamanhos, dependendo do produto.\n\n" +
+      "Temos opções como P, M, G, GG e numerações específicas para algumas peças.\n\n" +
+      "Qual produto você gostaria de consultar?"
+    );
+  }
+
+  if (
+    text.includes("cor") ||
+    text.includes("cores")
+  ) {
+    return (
+      "🎨 Temos produtos em diferentes cores, como preto, branco, azul, rosa, vermelho, cinza, marrom e bege.\n\n" +
+      "A disponibilidade é fictícia nesta demonstração.\n\n" +
+      "Qual peça você gostaria de conhecer?"
+    );
+  }
+
+  if (
+    text.includes("preco") ||
+    text.includes("precos") ||
+    text.includes("valor") ||
+    text.includes("quanto custa")
+  ) {
+    return getFashionCatalog();
+  }
+
+  if (
+    text.includes("disponibilidade") ||
+    text.includes("disponivel") ||
+    text.includes("estoque") ||
+    text.includes("tem no estoque")
+  ) {
+    return (
+      "📦 Posso demonstrar uma consulta de disponibilidade de produtos.\n\n" +
+      "Informe o nome da peça, o tamanho e a cor desejados.\n\n" +
+      "Os resultados desta demonstração não representam um estoque real."
+    );
+  }
+
+  if (
+    text.includes("comprar") ||
+    text.includes("pedido") ||
+    text.includes("pedir") ||
+    text.includes("quero comprar")
+  ) {
+    return (
+      "🛒 Vamos simular uma compra na Loja Fashion!\n\n" +
+      "Para começar, escolha um produto do nosso catálogo.\n\n" +
+      "Depois podemos demonstrar a seleção de tamanho, cor e quantidade.\n\n" +
+      "Esta é uma simulação. Nenhuma compra real será realizada."
+    );
+  }
+
+  if (
+    text.includes("entrega") ||
+    text.includes("frete") ||
+    text.includes("prazo")
+  ) {
+    return (
+      "🚚 Na demonstração, podemos simular opções de entrega e prazos.\n\n" +
+      "Em um projeto real, o sistema poderá consultar o CEP, calcular o frete e apresentar a previsão de entrega."
+    );
+  }
+
+  if (
+    text.includes("pagamento") ||
+    text.includes("pix") ||
+    text.includes("cartao") ||
+    text.includes("dinheiro")
+  ) {
+    return (
+      "💳 FORMAS DE PAGAMENTO\n\n" +
+      "Na demonstração, temos:\n\n" +
+      "• Pix\n" +
+      "• Dinheiro\n" +
+      "• Cartão de débito\n" +
+      "• Cartão de crédito\n\n" +
+      "Informações fictícias para demonstração."
+    );
+  }
+
+  if (
+    text.includes("troca") ||
+    text.includes("devolucao") ||
+    text.includes("devolver")
+  ) {
+    return (
+      "🔄 Em uma loja virtual personalizada, podemos configurar uma política de trocas e devoluções, com prazos, condições e orientações para os clientes.\n\n" +
+      "As regras desta loja são fictícias nesta demonstração."
+    );
+  }
+
+  if (
+    text.includes("obrigado") ||
+    text.includes("obrigada") ||
+    text.includes("valeu")
+  ) {
+    return "A Loja Fashion agradece sua visita! 🛍️ Espero ter ajudado. Volte sempre!";
+  }
+
+  return (
+    "Olá! Seja bem-vindo(a) à Loja Fashion! 🛍️\n\n" +
+    "Posso ajudar você a conhecer:\n\n" +
+    "👕 Camisetas e roupas\n" +
+    "👖 Calças\n" +
+    "👗 Vestidos\n" +
+    "🎨 Cores e tamanhos\n" +
+    "💰 Preços\n" +
+    "📦 Disponibilidade e entregas\n" +
+    "🛒 Simulação de compra\n\n" +
+    "O que você gostaria de conhecer?"
+  );
+}
+
+function formatFashionCategory(category, products) {
+  let response = `🛍️ ${category.toUpperCase()} — LOJA FASHION\n\n`;
+
+  for (const product of products) {
+    response += `${product.name} — ${formatPrice(product.price)}\n`;
+    response += `${product.description}\n`;
+    response += `Tamanhos: ${product.sizes.join(", ")}\n`;
+    response += `Cores: ${product.colors.join(", ")}\n\n`;
+  }
+
+  response += "Valores e disponibilidade fictícios para demonstração.";
+
+  return response;
+}
+
+
+/* =========================================================
+   5. CLÍNICA SAÚDE
+========================================================= */
+
+const clinicSpecialties = [
+  {
+    name: "Clínica geral",
+    description: "Atendimento médico geral e avaliação inicial de saúde."
+  },
+  {
+    name: "Dermatologia",
+    description: "Atendimento relacionado à saúde da pele, cabelos e unhas."
+  },
+  {
+    name: "Pediatria",
+    description: "Atendimento médico voltado à saúde de crianças e adolescentes."
+  },
+  {
+    name: "Cardiologia",
+    description: "Atendimento especializado na saúde do coração e sistema cardiovascular."
+  }
+];
+
+function getClinicSpecialties() {
+  let response = "🏥 ESPECIALIDADES — CLÍNICA SAÚDE\n";
+  response += "━━━━━━━━━━━━━━━━━━━━\n\n";
+
+  for (const specialty of clinicSpecialties) {
+    response += `${specialty.name}\n`;
+    response += `${specialty.description}\n\n`;
+  }
+
+  response += "━━━━━━━━━━━━━━━━━━━━\n";
+  response += "Especialidades fictícias para demonstração.\n\n";
+  response += "Qual especialidade gostaria de conhecer?";
+
+  return response;
+}
+
+function getClinicResponse(message) {
+  const text = normalize(message);
+
+  if (
+    text.includes("especialidade") ||
+    text.includes("especialidades") ||
+    text.includes("medicos") ||
+    text.includes("medico") ||
+    text.includes("medica")
+  ) {
+    return getClinicSpecialties();
+  }
+
+  if (
+    text.includes("dermatologia") ||
+    text.includes("dermatologista")
+  ) {
+    return (
+      "🩺 DERMATOLOGIA\n\n" +
+      "A especialidade de dermatologia está disponível na demonstração da Clínica Saúde.\n\n" +
+      "O atendimento é apresentado como exemplo de uma futura solução personalizada.\n\n" +
+      "Gostaria de simular um agendamento?"
+    );
+  }
+
+  if (
+    text.includes("pediatria") ||
+    text.includes("pediatra") ||
+    text.includes("crianca")
+  ) {
+    return (
+      "🩺 PEDIATRIA\n\n" +
+      "A pediatria é uma das especialidades apresentadas na Clínica Saúde.\n\n" +
+      "O atendimento demonstrativo é voltado à saúde de crianças e adolescentes.\n\n" +
+      "Gostaria de simular um agendamento?"
+    );
+  }
+
+  if (
+    text.includes("cardiologia") ||
+    text.includes("cardiologista") ||
+    text.includes("coracao")
+  ) {
+    return (
+      "🩺 CARDIOLOGIA\n\n" +
+      "A cardiologia é uma das especialidades disponíveis na demonstração da Clínica Saúde.\n\n" +
+      "Gostaria de conhecer as informações de atendimento ou simular um agendamento?"
+    );
+  }
+
+  if (
+    text.includes("clinica geral") ||
+    text.includes("clinico geral")
+  ) {
+    return (
+      "🩺 CLÍNICA GERAL\n\n" +
+      "A clínica geral está disponível na demonstração da Clínica Saúde.\n\n" +
+      "O atendimento representa um exemplo de consulta médica geral.\n\n" +
+      "Gostaria de simular um agendamento?"
+    );
+  }
+
+  if (
+    text.includes("agendar") ||
+    text.includes("agendamento") ||
+    text.includes("marcar") ||
+    text.includes("consulta") ||
+    text.includes("reservar")
+  ) {
+    return (
+      "📅 SIMULAÇÃO DE AGENDAMENTO — CLÍNICA SAÚDE\n\n" +
+      "Vamos demonstrar como funcionaria o agendamento de uma consulta.\n\n" +
+      "Por favor, informe:\n\n" +
+      "1. Qual especialidade deseja consultar?\n" +
+      "2. Qual dia seria melhor para você?\n" +
+      "3. Qual horário prefere?\n\n" +
+      "Essas informações permitem demonstrar o fluxo de atendimento.\n\n" +
+      "Atenção: nenhum agendamento real será realizado."
+    );
+  }
+
+  if (
+    text.includes("horario") ||
+    text.includes("funciona") ||
+    text.includes("abre") ||
+    text.includes("fecha")
+  ) {
+    return (
+      "🕒 HORÁRIO DE ATENDIMENTO\n\n" +
+      "Segunda a sexta-feira: das 8h às 18h.\n\n" +
+      "Horário fictício para demonstração."
+    );
+  }
+
+  if (
+    text.includes("preco") ||
+    text.includes("valor") ||
+    text.includes("quanto custa") ||
+    text.includes("convenio") ||
+    text.includes("convenios")
+  ) {
+    return (
+      "💳 Os valores e convênios da Clínica Saúde são fictícios nesta demonstração.\n\n" +
+      "Em um projeto real, o assistente poderá apresentar preços de consultas, convênios aceitos e condições de atendimento configuradas pela clínica."
+    );
+  }
+
+  if (
+    text.includes("endereco") ||
+    text.includes("localizacao") ||
+    text.includes("onde fica")
+  ) {
+    return (
+      "📍 O endereço da Clínica Saúde é fictício nesta demonstração.\n\n" +
+      "Em uma implementação real, podemos adicionar endereço, mapa, localização e informações de como chegar."
+    );
+  }
+
+  if (
+    text.includes("documento") ||
+    text.includes("documentos") ||
+    text.includes("levar")
+  ) {
+    return (
+      "📋 Para demonstrar as orientações de atendimento, podemos informar documentos necessários, como documento de identificação e informações do convênio, quando aplicável.\n\n" +
+      "A lista definitiva deverá ser configurada pela clínica responsável."
+    );
+  }
+
+  if (
+    text.includes("urgencia") ||
+    text.includes("emergencia") ||
+    text.includes("passando mal") ||
+    text.includes("dor forte")
+  ) {
+    return (
+      "⚠️ Este assistente é apenas demonstrativo e não realiza avaliação médica ou atendimento de emergência.\n\n" +
+      "Se você estiver enfrentando uma emergência médica, procure imediatamente um serviço de urgência ou ligue 192 (SAMU), no Brasil."
+    );
+  }
+
+  if (
+    text.includes("sintoma") ||
+    text.includes("sintomas") ||
+    text.includes("diagnostico") ||
+    text.includes("remedio") ||
+    text.includes("medicamento")
+  ) {
+    return (
+      "ℹ️ A Clínica Saúde apresenta apenas uma demonstração de atendimento administrativo.\n\n" +
+      "Este assistente não realiza diagnósticos, não prescreve medicamentos e não substitui a avaliação de um profissional de saúde.\n\n" +
+      "Posso ajudar com informações sobre especialidades e simulação de agendamentos."
+    );
+  }
+
+  if (
+    text.includes("pagamento") ||
+    text.includes("pix") ||
+    text.includes("cartao")
+  ) {
+    return (
+      "💳 As formas de pagamento são informações fictícias nesta demonstração.\n\n" +
+      "Em um projeto real, podemos configurar as formas de pagamento aceitas pela clínica."
+    );
+  }
+
+  if (
+    text.includes("obrigado") ||
+    text.includes("obrigada") ||
+    text.includes("valeu")
+  ) {
+    return "A Clínica Saúde agradece seu contato! 😊 Estamos à disposição para apresentar nossas especialidades demonstrativas.";
+  }
+
+  return (
+    "Olá! Seja bem-vindo(a) à Clínica Saúde! 🏥\n\n" +
+    "Posso ajudar você com:\n\n" +
+    "🩺 Especialidades médicas\n" +
+    "📅 Simulação de agendamento\n" +
+    "🕒 Horários de atendimento\n" +
+    "📋 Orientações administrativas\n" +
+    "📍 Informações da clínica\n\n" +
+    "O que gostaria de conhecer?\n\n" +
+    "Este assistente é demonstrativo e não substitui orientação médica."
+  );
+}
+
+
+/* =========================================================
+   6. FUNÇÕES GERAIS
+========================================================= */
+
 function normalize(text) {
-  return text
+  return String(text)
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -152,6 +941,12 @@ function formatPrice(price) {
     currency: "BRL"
   });
 }
+
+
+/* =========================================================
+   7. RESTAURANTE SABOR
+   Funções originais preservadas.
+========================================================= */
 
 function getFullMenu() {
   let response = "🍽️ CARDÁPIO COMPLETO — RESTAURANTE SABOR\n";
@@ -349,110 +1144,56 @@ function getRestaurantResponse(message) {
   return "Será um prazer ajudar! 😊\n\nPosso mostrar o cardápio completo, apresentar pratos executivos, hambúrgueres, massas, porções e bebidas, consultar preços ou simular um pedido.\n\nO que gostaria de conhecer?";
 }
 
+
+/* =========================================================
+   8. FUNÇÃO PRINCIPAL
+   Direciona a mensagem para o assistente correto.
+========================================================= */
+
 export function getBotResponse(businessId, message) {
   const text = normalize(message);
-  const business = knowledge[businessId];
-
-  if (!business) {
-    return "Desculpe, não consegui identificar este assistente.";
-  }
 
   if (!text) {
     return "Por favor, escreva sua mensagem para que eu possa ajudar.";
+  }
+
+  if (!knowledge[businessId]) {
+    return "Desculpe, não consegui identificar este assistente.";
   }
 
   if (businessId === "restaurante") {
     return getRestaurantResponse(message);
   }
 
-  if (/^(oi|ola|bom dia|boa tarde|boa noite)$/.test(text)) {
-    return "Olá! Seja bem-vindo(a)! 😊 Como posso ajudar você hoje?";
+  const isGreeting =
+    /^(oi|ola|bom dia|boa tarde|boa noite|tudo bem|e ai|opa)$/.test(text);
+
+  if (isGreeting) {
+    const greetings = {
+      barbearia:
+        "Olá! Seja bem-vindo(a) à Barbearia Premium! 💈 Como posso ajudar você hoje?",
+
+      loja:
+        "Olá! Seja bem-vindo(a) à Loja Fashion! 🛍️ Como posso ajudar você hoje?",
+
+      clinica:
+        "Olá! Seja bem-vindo(a) à Clínica Saúde! 🏥 Como posso ajudar você hoje?"
+    };
+
+    return greetings[businessId] || "Olá! Como posso ajudar você hoje? 😊";
   }
 
-  if (
-    text.includes("preco") ||
-    text.includes("valor") ||
-    text.includes("custa") ||
-    text.includes("quanto")
-  ) {
-    return business.precos || "Entre em contato para consultar os valores demonstrativos.";
-  }
+  switch (businessId) {
+    case "barbearia":
+      return getBarberResponse(message);
 
-  if (
-    text.includes("horario") ||
-    text.includes("funciona") ||
-    text.includes("abre") ||
-    text.includes("fecha")
-  ) {
-    return business.horarios || "Consulte nossos horários de atendimento demonstrativos.";
-  }
+    case "loja":
+      return getFashionResponse(message);
 
-  if (
-    text.includes("agendar") ||
-    text.includes("agendamento") ||
-    text.includes("marcar") ||
-    text.includes("consulta") ||
-    text.includes("reserva")
-  ) {
-    return business.agendamento || business.consultas || "Posso ajudar você com informações sobre agendamentos.";
-  }
+    case "clinica":
+      return getClinicResponse(message);
 
-  if (
-    text.includes("servico") ||
-    text.includes("corte") ||
-    text.includes("barba")
-  ) {
-    return business.servicos || "Consulte nossos serviços demonstrativos.";
+    default:
+      return "Desculpe, não consegui identificar este assistente.";
   }
-
-  if (
-    text.includes("delivery") ||
-    text.includes("entrega")
-  ) {
-    return business.delivery || business.entrega || "Consulte nossas opções demonstrativas de entrega.";
-  }
-
-  if (
-    text.includes("produto") ||
-    text.includes("roupa") ||
-    text.includes("camiseta") ||
-    text.includes("vestido")
-  ) {
-    return business.produtos || "Consulte nossos produtos demonstrativos.";
-  }
-
-  if (text.includes("tamanho")) {
-    return business.tamanhos || "Consulte os tamanhos disponíveis na demonstração.";
-  }
-
-  if (
-    text.includes("pagamento") ||
-    text.includes("pix") ||
-    text.includes("cartao")
-  ) {
-    return business.pagamentos || "Consulte as formas de pagamento demonstrativas.";
-  }
-
-  if (
-    text.includes("especialidade") ||
-    text.includes("medico") ||
-    text.includes("medica") ||
-    text.includes("clinica")
-  ) {
-    return business.especialidades || "Consulte nossas especialidades demonstrativas.";
-  }
-
-  if (
-    text.includes("endereco") ||
-    text.includes("localizacao") ||
-    text.includes("onde fica")
-  ) {
-    return "O endereço desta empresa é fictício nesta demonstração. Entre em contato para conhecer uma futura implementação personalizada.";
-  }
-
-  if (text.includes("obrigado") || text.includes("obrigada")) {
-    return "Por nada! 😊 Estou à disposição para ajudar.";
-  }
-
-  return "Entendi! 😊 Posso ajudar com informações sobre nossos serviços, produtos, preços, horários e atendimento. O que você gostaria de saber?";
 }
