@@ -1,9 +1,19 @@
 
+/* =========================================
+   DEVLUISOLIVEIRA AI
+   CARDS DE DEMONSTRAÇÃO
+========================================= */
+
+/* GRADE DOS NEGÓCIOS */
+
 .business-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
+  width: 100%;
 }
+
+/* CARD */
 
 .business-card {
   min-width: 0;
@@ -14,7 +24,10 @@
   background: linear-gradient(145deg, #141d2b, #0e1520);
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .business-card:hover {
@@ -22,6 +35,8 @@
   border-color: var(--business-color);
   box-shadow: 0 15px 40px #0008;
 }
+
+/* IMAGEM DO CARD */
 
 .card-image-wrapper {
   height: 190px;
@@ -43,6 +58,8 @@
   transform: scale(1.08);
 }
 
+/* SOBREPOSIÇÃO DA IMAGEM */
+
 .card-image-overlay {
   position: absolute;
   inset: 0;
@@ -55,6 +72,8 @@
   pointer-events: none;
 }
 
+/* NÚMERO DO CARD */
+
 .card-number {
   position: absolute;
   top: 15px;
@@ -66,6 +85,8 @@
   text-shadow: 0 2px 8px #000;
 }
 
+/* ÍCONE DO NEGÓCIO */
+
 .card-icon {
   position: absolute;
   right: 15px;
@@ -76,16 +97,28 @@
   place-items: center;
   border-radius: 12px;
   font-size: 22px;
-  background: color-mix(in srgb, var(--business-color) 22%, #101824);
-  border: 1px solid color-mix(in srgb, var(--business-color) 55%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--business-color) 22%,
+    #101824
+  );
+  border: 1px solid color-mix(
+    in srgb,
+    var(--business-color) 55%,
+    transparent
+  );
   box-shadow: 0 5px 20px #0006;
 }
+
+/* CONTEÚDO DO CARD */
 
 .card-content {
   position: relative;
   z-index: 1;
   padding: 22px 22px 18px;
 }
+
+/* CATEGORIA */
 
 .business-category {
   color: var(--business-color);
@@ -94,11 +127,16 @@
   font-weight: 700;
 }
 
+/* TÍTULO */
+
 .business-card h3 {
   font-family: "Space Grotesk", sans-serif;
   font-size: 20px;
   margin-top: 10px;
+  color: #f1f5f9;
 }
+
+/* DESCRIÇÃO */
 
 .business-card p {
   margin-top: 12px;
@@ -107,6 +145,8 @@
   line-height: 1.7;
   min-height: 62px;
 }
+
+/* BOTÃO */
 
 .card-button {
   margin-top: 20px;
@@ -117,10 +157,11 @@
   border-top: 1px solid #29384b;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: #d3e1ed;
   font-size: 11px;
   font-weight: 600;
-  transition: 0.2s;
+  transition: color 0.2s ease;
   cursor: pointer;
 }
 
@@ -131,6 +172,8 @@
 .card-button span {
   font-size: 16px;
 }
+
+/* EFEITO DECORATIVO */
 
 .card-decoration {
   position: absolute;
@@ -144,22 +187,53 @@
   pointer-events: none;
 }
 
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+/* TABLETS E TELAS MENORES */
+
 @media (max-width: 1050px) {
   .business-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
+/* CELULARES */
+
 @media (max-width: 480px) {
   .business-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .card-image-wrapper {
     height: 210px;
   }
 
+  .card-content {
+    padding: 20px;
+  }
+
   .business-card p {
     min-height: auto;
+  }
+}
+
+/* ACESSIBILIDADE: REDUÇÃO DE MOVIMENTO */
+
+@media (prefers-reduced-motion: reduce) {
+  .business-card,
+  .card-image,
+  .card-button {
+    transition: none;
+  }
+
+  .business-card:hover {
+    transform: none;
+  }
+
+  .business-card:hover .card-image {
+    transform: none;
   }
 }
