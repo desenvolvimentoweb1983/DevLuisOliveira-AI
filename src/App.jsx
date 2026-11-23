@@ -16,6 +16,22 @@ const businessImages = {
   clinica: clinicImage,
 };
 
+const whatsappLink = "https://wa.me/5519974082724";
+
+function WhatsAppIcon() {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      width="29"
+      height="29"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M16.02 3C8.85 3 3.02 8.82 3.02 15.99c0 2.29.6 4.52 1.75 6.49L3 29l6.68-1.75a12.95 12.95 0 0 0 6.33 1.65h.01C23.19 28.9 29 23.08 29 15.91A12.9 12.9 0 0 0 16.02 3Zm0 23.7c-1.98 0-3.92-.53-5.61-1.54l-.4-.24-3.96 1.04 1.06-3.86-.26-.42a10.7 10.7 0 0 1-1.65-5.69c0-5.94 4.84-10.78 10.8-10.78 2.88 0 5.59 1.12 7.63 3.16a10.72 10.72 0 0 1 3.15 7.64c0 5.95-4.84 10.79-10.76 10.79Zm5.92-8.08c-.32-.16-1.9-.94-2.2-1.05-.3-.11-.51-.16-.73.16-.22.32-.84 1.05-1.03 1.27-.19.22-.38.24-.7.08-.32-.16-1.36-.5-2.6-1.59-.96-.85-1.6-1.9-1.79-2.22-.19-.32-.02-.5.14-.66.14-.14.32-.38.48-.57.16-.19.21-.32.32-.54.11-.22.05-.41-.03-.57-.08-.16-.73-1.75-1-2.4-.27-.64-.54-.55-.73-.56h-.62c-.22 0-.57.08-.86.4-.3.32-1.13 1.1-1.13 2.68s1.16 3.11 1.32 3.33c.16.22 2.27 3.47 5.5 4.87.77.33 1.37.53 1.84.68.77.25 1.47.22 2.02.13.62-.09 1.9-.78 2.17-1.53.27-.76.27-1.4.19-1.54-.08-.13-.3-.21-.62-.37Z" />
+    </svg>
+  );
+}
+
 function App() {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -326,15 +342,18 @@ function App() {
           </p>
 
           <a
-            href="mailto:contato@devluisoliveira.com"
-            className="primary-button"
+            href={whatsappLink}
+            className="primary-button contact-whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Solicitar informações <span>↗</span>
+            <WhatsAppIcon />
+            Fale comigo pelo WhatsApp
+            <span>↗</span>
           </a>
 
           <small>
-            O endereço de contato deverá ser substituído pelo canal
-            comercial oficial antes da publicação.
+            WhatsApp: (19) 97408-2724
           </small>
         </section>
       </main>
@@ -356,6 +375,20 @@ function App() {
           DESENVOLVIDO POR DEVLUISOLIVEIRA
         </span>
       </footer>
+
+      <a
+        href={whatsappLink}
+        className="whatsapp-float"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Entre em contato pelo WhatsApp"
+        title="Fale comigo pelo WhatsApp"
+      >
+        <WhatsAppIcon />
+        <span className="whatsapp-tooltip">
+          Fale comigo pelo WhatsApp
+        </span>
+      </a>
 
       {selectedBusiness && (
         <div className="chat-overlay">
