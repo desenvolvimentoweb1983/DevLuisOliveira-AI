@@ -4,6 +4,18 @@ import "./App.css";
 import { businesses } from "./data/businesses";
 import { getBotResponse } from "./services/chatbotService";
 
+import barbeariaImage from "./assets/images/barbearia-premium.webp";
+import restaurantImage from "./assets/images/restaurante-sabor.webp";
+import fashionImage from "./assets/images/loja-fashion.webp";
+import clinicImage from "./assets/images/clinica-saude.webp";
+
+const businessImages = {
+  barbearia: barbeariaImage,
+  restaurante: restaurantImage,
+  loja: fashionImage,
+  clinica: clinicImage,
+};
+
 function App() {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -134,7 +146,6 @@ function App() {
           <div className="hero-visual">
             <div className="orbit orbit-one"></div>
             <div className="orbit orbit-two"></div>
-
             <div className="hero-glow"></div>
 
             <div className="ai-core">
@@ -193,7 +204,16 @@ function App() {
                 key={business.id}
                 style={{ "--business-color": business.color }}
               >
-                <div className="card-top">
+                <div className="card-image-wrapper">
+                  <img
+                    className="card-image"
+                    src={businessImages[business.id]}
+                    alt={`Imagem ilustrativa de ${business.name}`}
+                    loading="lazy"
+                  />
+
+                  <div className="card-image-overlay"></div>
+
                   <span className="card-number">
                     0{index + 1}
                   </span>
@@ -203,21 +223,23 @@ function App() {
                   </span>
                 </div>
 
-                <span className="business-category">
-                  {business.category}
-                </span>
+                <div className="card-content">
+                  <span className="business-category">
+                    {business.category}
+                  </span>
 
-                <h3>{business.name}</h3>
+                  <h3>{business.name}</h3>
 
-                <p>{business.description}</p>
+                  <p>{business.description}</p>
 
-                <button
-                  className="card-button"
-                  onClick={() => openChat(business)}
-                >
-                  Experimentar assistente
-                  <span>↗</span>
-                </button>
+                  <button
+                    className="card-button"
+                    onClick={() => openChat(business)}
+                  >
+                    Experimentar assistente
+                    <span>↗</span>
+                  </button>
+                </div>
 
                 <div className="card-decoration"></div>
               </article>
@@ -272,7 +294,9 @@ function App() {
               <span>02</span>
               <div>
                 <h3>Experiência interativa</h3>
-                <p>Atendimento demonstrativo com conversas contextualizadas.</p>
+                <p>
+                  Atendimento demonstrativo com conversas contextualizadas.
+                </p>
               </div>
             </div>
 
@@ -287,7 +311,9 @@ function App() {
         </section>
 
         <section className="contact-section">
-          <span className="section-eyebrow">SEU NEGÓCIO PODE SER O PRÓXIMO</span>
+          <span className="section-eyebrow">
+            SEU NEGÓCIO PODE SER O PRÓXIMO
+          </span>
 
           <h2>
             Vamos desenvolver uma solução
